@@ -4,6 +4,16 @@ format to show"""
 line_length = 60
 
 def wrap(info):
+	""" wrap str/int with '-'s
+
+	return None if info is None, 
+	return info+\n if info is longer than line_length"""
+
+	if info is None:
+		return None
+	info = str(info)
+	if len(info) > line_length:
+		return info+'\n'
 	start_length = int((line_length - len(info)) / 2)
 	return "{}{}{}\n".format('-' * start_length, info,
 		'-' * (line_length - start_length - len(info)))
