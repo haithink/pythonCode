@@ -15,9 +15,13 @@ def get_desc(word):
 	if dict_idx is None:
 		return None
 	# get idx
-	QsenStart, QsenSize = dict_idx[word.lower()]
+	idx = dict_idx.get(word.lower(), None)
+	if idx is None:
+		return 'word not exist'
 	# get desc by idx
-	desc = None
+	QsenStart, QsenSize = idx
+	# set default value, return it if not modified
+	desc = 'data file error. filename = {}'.format(dictfile)
 	with open(dictfile,'rb') as dictObject:
 		dictObject.seek(QsenStart)
 		desc = dictObject.read(QsenSize)
