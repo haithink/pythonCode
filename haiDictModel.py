@@ -1,34 +1,38 @@
 # read the idx file and extract all the words,then write into a txt file
 import sys
-import os
-import struct
-import codecs
 
 import message
-import core_dict
+import search_engine 
+
 # reload(sys) 
 # sys.setdefaultencoding('utf8')
 
-#convert the coded format!
-#don't konw why do this temporarily
-def ConvertCN(s):
-    return s.encode('gb18030')
+def show(info, line_break=False):
+	if isinstance(info, bytes):
+		sys.stdout.buffer.write(info.decode('utf-8').encode('gb18030'))
+	else:
+		print(info)
+	if line_break:
+		print('\n')
 
-message.clear_screen('cls')
-print(message.head("haithink's Dict", contant='Contact 330240295@qq.com'))
+def quit():
+	print(message.wrap('bye'))
+
+def dict_info():
+	return message.head("haithink's Dict", contant='Contact 330240295@qq.com')
+
+def queryModel():
+	search_engine.load_idx()
+	while True:
+		try:
+			word = input(message.wrap("Please enter the word('ctrl+c' to quit):"))
+		except KeyboardInterrupt:
+			quit()
+			break
+		show(search_engine.get_desc(word), line_break = True)
 
 # Main Function!
-print('-----------------------command model----------------------\n')			
-bRun = True;
-while(bRun):
-	try:
-		cmd = input('--------------------Please enter the command:-------------\n')
-		if(cmd == 'q'):
-			core_dict.queryModel()
-		elif(cmd == 'r'):
-			print('rem mode to recite a word')
-		else:
-			print('-----------------------unkonwn command-----------------------\n')
-	except EOFError:
-		print('---------------------Quit the programe---------------------')
-		bRun = False
+if __name__ == '__main__':
+	message.clear_screen('cls')
+	show(dict_info())
+	queryModel()
