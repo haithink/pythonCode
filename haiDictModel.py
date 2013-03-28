@@ -36,28 +36,61 @@ print('\
 **********************************************************\n\
 ---------------------Please Contact 330240295@qq.com------\n\
 **********************************************************\n')
-haiDict = {};
-dictData = 'wordInfo.data'
-# Read back from the storage
-f = open(dictData,'rb')
-haiDict = pickle.load(f)
-f.close();
 
 
-bQuery = True	
-while(bQuery):
-	try:
-		query = input('\
----------------------Please enter the word:---------------\n')
-		#print query
-		#print haiDict
+
+def remModel():
+	print('-----------------------rem model----------------------\n')
+	bRem = True
+	while(bRem):
 		try:
-			[QsenStart, QsenSize] = haiDict[query.lower()]
-			print(QsenStart, QsenSize)
-			printSense(QsenStart, QsenSize)
-		except KeyError:
-			print('---------------------cannot find this word!-----------------------')
+			rem = input('---------------------Please enter the word:---------------\n')
+			print(rem)
+		except EOFError:
+			print('---------------------Quit the rem model---------------------')
+			bRem = False
+
+
+def queryModel():
+	print('-----------------------query model----------------------\n')		
+	haiDict = {};
+	dictData = 'wordInfo.data'
+	# Read back from the storage
+	f = open(dictData,'rb')
+	haiDict = pickle.load(f)
+	f.close();
+
+
+	bQuery = True	
+	while(bQuery):
+		try:
+			query = input('---------------------Please enter the word:---------------\n')
+			#print query
+			#print haiDict
+			try:
+				[QsenStart, QsenSize] = haiDict[query.lower()]
+				print(QsenStart, QsenSize)
+				printSense(QsenStart, QsenSize)
+			except KeyError:
+				print('------------------cannot find this word!--------------------')
+		except EOFError:
+			print('---------------------Quit the query model---------------------')
+			dictObject.close()
+			bQuery = False	
+
+
+# Main Function!
+print('-----------------------command model----------------------\n')			
+bRun = True;
+while(bRun):
+	try:
+		cmd = input('--------------------Please enter the command:-------------\n')
+		if(cmd == 'q'):
+			queryModel()
+		elif(cmd == 'r'):
+			remModel()
+		else:
+			print('-----------------------unkonwn command-----------------------\n')
 	except EOFError:
 		print('---------------------Quit the programe---------------------')
-		dictObject.close()
-		bQuery = False	
+		bRun = False
