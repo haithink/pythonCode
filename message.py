@@ -32,8 +32,3 @@ def head(*args, **kwargs):
 		head_info += wrap(info)
 	head_info += stars_line()
 	return head_info
-
-if __name__ == "__main__":
-	#print(tt.wrap('dict'))
-	#print(tt.stars())
-	print(head("haithink's Dict", contant='Contact 330240295@qq.com'))
