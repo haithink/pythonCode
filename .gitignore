@@ -1,3 +1,6 @@
 # vim
 .ropeproject/*
 *.swp
+
+# python cache
+*.pyc
